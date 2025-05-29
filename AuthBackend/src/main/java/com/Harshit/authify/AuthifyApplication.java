@@ -7,7 +7,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AuthifyApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AuthifyApplication.class, args);
+//		SpringApplication.run(AuthifyApplication.class, args);
+		try {
+			SpringApplication.run(AuthifyApplication.class, args);
+		} catch (Throwable e) {
+			e.printStackTrace();
+		}
 	}
 
 }
