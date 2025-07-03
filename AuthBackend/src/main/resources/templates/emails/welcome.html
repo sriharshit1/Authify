@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Authify</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 20px; color: #333;">
+<div style="max-width: 600px; margin: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-color: #ffffff; overflow: hidden;">
+    <div style="background-color: #001f3f; padding: 20px; color: white; text-align: center;">
+        <h1>👋 Welcome, <span th:text="${name}">User</span>!</h1>
+    </div>
+    <div style="padding: 20px;">
+        <p>Hi <b th:text="${name}">User</b>,</p>
+        <p>We’re thrilled to have you join <b>Authify</b>. Get ready to experience secure and seamless authentication.</p>
+        <a href="https://hirex-o8sd.onrender.com" style="display: inline-block; background-color: #001f3f; color: white; padding: 12px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; margin-top: 20px;">Go to Authify</a>
+        <p style="margin-top: 20px;">Cheers,<br><b>Authify Team</b></p>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Account Verification OTP</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 20px; color: #333;">
+<div style="max-width: 600px; margin: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-color: #ffffff; overflow: hidden;">
+    <div style="background-color: #001f3f; padding: 20px; color: white; text-align: center;">
+        <h1>✅ Account Verification OTP</h1>
+    </div>
+    <div style="padding: 20px;">
+        <p>Hi,</p>
+        <p>Use the OTP below to verify your Authify account:</p>
+        <h2 style="color: white; text-align: center; background: linear-gradient(90deg, #001f3f, #003366); padding: 10px; border-radius: 4px;" th:text="${otp}">654321</h2>
+        <p>This OTP is valid for <b>10 minutes</b>. Please do not share it.</p>
+        <p style="margin-top: 20px;">Thanks,<br><b>Authify Team</b></p>
+    </div>
+</div>
+</body>
+</html>

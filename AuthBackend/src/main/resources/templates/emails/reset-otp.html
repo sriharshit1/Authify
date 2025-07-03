@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Password Reset OTP</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f4f6f8; padding: 20px; color: #333;">
+<div style="max-width: 600px; margin: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); background-color: #ffffff; overflow: hidden;">
+    <div style="background-color: #001f3f; padding: 20px; color: white; text-align: center;">
+        <h1>🔑 Password Reset OTP</h1>
+    </div>
+    <div style="padding: 20px;">
+        <p>Hello,</p>
+        <p>You requested to reset your password. Use the OTP below to continue:</p>
+        <h2 style="color: white; text-align: center; background: linear-gradient(90deg, #001f3f, #003366); padding: 10px; border-radius: 4px;" th:text="${otp}">123456</h2>
+        <p>This OTP will expire in <b>10 minutes</b>. Do not share it with anyone.</p>
+        <p style="margin-top: 20px;">Regards,<br><b>Authify Security Team</b></p>
+    </div>
+</div>
+</body>
+</html>

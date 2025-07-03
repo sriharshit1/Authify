@@ -25,65 +25,56 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     private final AppUserDetailsService appUserDetailsService;
     private final JwtUtil jwtUtil;
 
+    private static final List<String> PUBLIC_URLS = List.of("/login", "/register", "/send-reset-otp", "/reset-password", "/logout");
 
-    private static final List<String> PUBLIC_URLS = List.of("/login","/register","/send-reset-otp","/reset-password","/logout");
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
 
+        String path = request.getServletPath();
 
-        String path = request.getServletPath();;
-
-        if(PUBLIC_URLS.contains(path)){
-            filterChain.doFilter(request,response);
+        if (PUBLIC_URLS.contains(path)) {
+            filterChain.doFilter(request, response);
             return;
-
         }
 
         String jwt = null;
         String email = null;
 
-
-        //1- Check the authorization header
-
+        // 1- Check the Authorization header
         final String authorizationHeader = request.getHeader("Authorization");
-        if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             jwt = authorizationHeader.substring(7);
-
         }
 
-        //2- if we found in header , check cookies
-        if(jwt == null){
+        // 2- If not found in header, check cookies
+        if (jwt == null) {
             Cookie[] cookies = request.getCookies();
-            if(cookies != null){
-                for(Cookie cookie: cookies){
-                    System.out.println("Incoming cookie: " + cookie.getName() + " = " + cookie.getValue());
-                    if("jwt".equals(cookie.getName())){
-                        jwt= cookie.getValue();
-                        System.out.println("Extracted JWT from cookie: " + jwt);
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("jwt".equals(cookie.getName())) {
+                        jwt = cookie.getValue();
                         break;
                     }
                 }
             }
         }
 
-        //3- Validate the token and set security context
-
-        if(jwt != null){
+        // 3- Validate the token and set security context
+        if (jwt != null) {
             email = jwtUtil.extractEmail(jwt);
-            System.out.println("Email from token: " + email);
 
-            if(email != null && SecurityContextHolder.getContext().getAuthentication() == null){
+            if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = appUserDetailsService.loadUserByUsername(email);
-                if(jwtUtil.validateToken(jwt,userDetails)){
-                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails,
-                            null,userDetails.getAuthorities());
+                if (jwtUtil.validateToken(jwt, userDetails)) {
+                    UsernamePasswordAuthenticationToken authenticationToken =
+                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
                 }
             }
         }
 
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
 }

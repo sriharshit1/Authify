@@ -14,9 +14,5 @@ public class AuthifyApplication {
 
 	}
 
-	@Bean
-	public CommandLineRunner logPort(@Value("${server.port}") String port) {
-		return args -> System.out.println("✅ Server is running on port: " + port);
-	}
 
 }
