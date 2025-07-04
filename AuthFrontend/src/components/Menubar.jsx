@@ -11,6 +11,7 @@ const Menubar = ()=>{
     const{userData, backendURL,setUserData,setIsLoggedIn} = useContext(AppContext);
     const [dropDownOpen,setDropDownOpen] = useState(false);
     const dropDownRef = useRef(null);
+    const [loading,setLoading] =useState(false);
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -42,6 +43,7 @@ const Menubar = ()=>{
 
     const sentVerificationOtp = async()=>{
         try{
+            setLoading(true);
             axios.defaults.withCredentials = true;
             const response = await axios.post(backendURL+"/send-otp");
             if(response.status === 200){
@@ -54,9 +56,35 @@ const Menubar = ()=>{
         }catch(error){
             toast.error(error.response.data.message);
         }
+        finally {
+            setLoading(false); // ✅ Stop loading
+        }
     }
     return(
         <>
+        {loading && (
+                <div style={{
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    width: "100%",
+                    height: "100%",
+                    backdropFilter: "blur(5px)", 
+                    WebkitBackdropFilter: "blur(5px)",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 9999
+                }}>
+                    <div className="spinner-border" role="status" style={{
+                        width: "3rem",
+                        height: "3rem",
+                        color: "purple" // ✅ Purple spinner
+                    }}>
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            )}
         <nav className="navbar bg-white px- py-4 d-flex justify-content-between align-items-center">
             <div className="d-flex align-items-center gap2">
 
