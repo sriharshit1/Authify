@@ -47,8 +47,9 @@ public class AuthController {
             ResponseCookie cookie = ResponseCookie.from("jwt",jwtToken)
                     .httpOnly(true)
                     .path("/")
+                    .secure(true)
                     .maxAge(Duration.ofDays(1))
-                    .sameSite("Strict")
+                    .sameSite("None")
                     .build();
             return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
                     .body(new AuthResponse(request.getEmail(),jwtToken));
